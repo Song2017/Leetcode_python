@@ -4,6 +4,7 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def reverseListWhile(self, head):
         '''
@@ -26,23 +27,24 @@ class Solution:
         rev = None
         p = head
         while p:
-            tmp = p.next 
-            #1, 2+1, 3+2->1
+            tmp = p.next
+            # 1, 2+1, 3+ 2->1
             p.next = rev
             rev = p
-            p = tmp 
+            p = tmp
         return rev
+
     def reverseListRecur(self, head, prev=None):
         if not head:
             return prev
         nextnode = head.next
         head.next = prev
         return self.reverseListRecur(nextnode, head)
+
     def reverseList(self, head):
         rev = None
         p = head
         while p:
-            #多元赋值的时候，右边的值不会随着赋值而改变
+            # 多元赋值的时候，右边的值不会随着赋值而改变
             rev, rev.next, p = p, rev, p.next
         return rev
-        

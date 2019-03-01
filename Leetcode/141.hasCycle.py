@@ -4,6 +4,7 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution(object):
     def hasCycle(self, head):
         """
@@ -15,33 +16,36 @@ class Solution(object):
         而快的最终一定会追上慢的
         时间复杂度O(n), 空间复杂度为操作原始链表为常数级别
         """
-        if head == None or head.next == None : 
+        if head is None or head.next is None:
             return False
         slow = head
         fast = head.next
         while slow != fast:
-            if fast == None or fast.next == None:
+            if fast is None or fast.next is None:
                 return False
             slow = slow.next
             fast = fast.next.next
-            
+
         return True
-    class Solution(object):
+
+
+class SolutionF(object):
     def hasCycleFast(self, head):
         """
         :type head: ListNode
         :rtype: bool
         """
-        slow=fast=head
+        slow = fast = head
         while slow and fast:
             try:
-                slow=slow.next
-                fast=fast.next.next
-            except:
+                slow = slow.next
+                fast = fast.next.next
+            except():
                 return False
-            if slow==fast:
+            if slow is fast:
                 return True
         return False
+
 
 def stringToListNode(input):
     # Generate list from the input
@@ -57,14 +61,18 @@ def stringToListNode(input):
     ptr = dummyRoot.next
     return ptr
 
+
 def stringToInt(input):
     return int(input)
 
+
 def main():
     import sys
+
     def readlines():
         for line in sys.stdin:
             yield line.strip('\n')
+
     lines = readlines()
     while True:
         try:
@@ -72,13 +80,12 @@ def main():
             head = stringToListNode(line)
             line = lines.next()
             pos = stringToInt(line)
-            
             ret = Solution().hasCycle(head, pos)
-
             out = (ret)
-            print out
+            print(out)
         except StopIteration:
             break
 
-if __name__ == '__main__':
+
+if __name__ is '__main__':
     main()
