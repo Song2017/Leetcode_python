@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from datetime import datetime
-
 '''
 二分查找（Binary Search）算法，也叫折半查找算法
 针对"有序数据集合"的查找算法
@@ -37,9 +36,9 @@ def binarySearch(arr, value):
         if arr[mid] >= value:
             high = mid - 1
         # low或high直接取mid会出现死循环, 当二者的值相等
-        elif arr[mid] < value:
+        else:
             low = mid + 1
-    # 大于等于会将索引都转移到low, 添加low的值的有效判断
+    # else会将索引都转移到low, 添加low的值的有效判断
     if low < len(arr) and arr[low] == value:
         return low
     else:
@@ -56,13 +55,12 @@ def binarySearchLast(arr, value):
     while low <= high:
         # 等价于 mid = (low + high)//2, 下面的写法可以避免大数之和的溢出
         mid = low + ((high - low) >> 1)
-        # 存在相等的值时, 会取最后一个符合的值
+        # 存在相等的值时, 会取最后一个符合的值,low或high直接取mid会出现死循环, 当二者的值相等
         if arr[mid] <= value:
             low = mid + 1
-        # low或high直接取mid会出现死循环, 当二者的值相等
-        elif arr[mid] > value:
+        # 大于会将索引都转移到high, 添加high的值的有效判断
+        else:
             high = mid - 1
-    # 大于等于会将索引都转移到low, 添加low的值的有效判断
     if high < len(arr) and arr[high] == value:
         return high
     else:
@@ -80,7 +78,7 @@ def binarySearchLargeEql(arr, value):
         # 等价于 mid = (low + high)//2, 下面的写法可以避免大数之和的溢出
         mid = low + ((high - low) >> 1)
         if arr[mid] >= value:
-            if mid == 0 or arr[mid-1] < value:
+            if mid == 0 or arr[mid - 1] < value:
                 return mid
             else:
                 high = mid - 1
@@ -102,7 +100,7 @@ def binarySearchSmallEql(arr, value):
         if arr[mid] > value:
             high = mid - 1
         else:
-            if mid == len(arr) - 1 or arr[mid+1] > value:
+            if mid == len(arr) - 1 or arr[mid + 1] > value:
                 return mid
             else:
                 low = mid + 1
@@ -118,25 +116,26 @@ def binarySearchRec(arr, low, high, value):
         return mid
     # low或high直接取mid会出现死循环, 当二者的值相等
     elif arr[mid] < value:
-        binarySearchRec(arr, mid+1, high, value)
+        binarySearchRec(arr, mid + 1, high, value)
     else:
         binarySearchRec(arr, low, mid - 1, value)
 
 
 if __name__ == '__main__':
     print(datetime.now().strftime('%H:%M:%S.%f'))
-    print('binarySearch:', binarySearch(
-        [-90, 0, 1, 22, 32, 32, 32, 32, 44, 55, 98, 765], 32))
+    print('binarySearch:',
+          binarySearch([-90, 0, 1, 22, 32, 32, 32, 32, 44, 55, 98, 765], 32))
     print(datetime.now().strftime('%H:%M:%S.%f'))
-    print('binarySearchLast:', binarySearchLast(
-        [-90, 0, 1, 22, 32, 32, 32, 32, 32, 44, 55, 98, 765], 32))
+    print(
+        'binarySearchLast:',
+        binarySearchLast([-90, 0, 1, 22, 32, 32, 32, 32, 32, 44, 55, 98, 765],
+                         32))
     print(datetime.now().strftime('%H:%M:%S.%f'))
-    print('binarySearchLargeEql:', binarySearchLargeEql(
-        [3, 4, 6, 7, 9], 5))
+    print('binarySearchLargeEql:', binarySearchLargeEql([3, 4, 6, 7, 9], 5))
     print(datetime.now().strftime('%H:%M:%S.%f'))
-    print('binarySearchSmallEql:', binarySearchSmallEql(
-        [3, 4, 6, 7, 9], 5))
-    print(datetime.now().strftime('%H:%M:%S.%f'))          
-    print('binarySearchRec:', binarySearchRec(
-        [-90, 0, 1, 22, 32, 44, 55, 98, 765], 0, 8, 32))
+    print('binarySearchSmallEql:', binarySearchSmallEql([3, 4, 6, 7, 9], 5))
+    print(datetime.now().strftime('%H:%M:%S.%f'))
+    print('binarySearchRec:',
+          binarySearchRec([-90, 0, 1, 22, 32, 44, 55, 98, 765], 0, 8, 32))
+    print('binarySearchLast:', binarySearchLast([2, 5], 2))
     print(datetime.now().strftime('%H:%M:%S.%f'))

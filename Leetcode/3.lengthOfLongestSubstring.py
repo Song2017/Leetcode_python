@@ -15,10 +15,9 @@ class Solution:
                 # 出现重复字符时,更新其索引为下一个字符的位置
                 uniqueStart = existCharIndexs[char] + 1
             else:
-                maxLength = max(maxLength, index-uniqueStart+1)
+                maxLength = max(maxLength, index - uniqueStart + 1)
             existCharIndexs[char] = index
         return maxLength
-
 
 
 Solution1 = Solution()
