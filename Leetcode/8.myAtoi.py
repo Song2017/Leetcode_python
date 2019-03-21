@@ -49,13 +49,13 @@ class Solution:
         else:
             return -2**31 if -rtn < -2**31 else -rtn
 
-    def myAtoiFast(self, str):
+    def myAtoiFast(self, strs):
         import re
-        str = str.strip()
-        str = re.findall('(^[\+\-0]*\d+)\D*', str)
+        strs = strs.strip()
+        strs = re.findall('(^[\+\-0]*\d+)\D*', strs)
 
         try:
-            result = int(''.join(str))
+            result = int(''.join(strs))
             MAX_INT = 2147483647
             MIN_INT = -2147483648
             if result > MAX_INT > 0:
@@ -65,6 +65,7 @@ class Solution:
             else:
                 return result
         except Exception as e:
+            print(e)
             return 0
 
 
