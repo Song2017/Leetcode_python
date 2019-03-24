@@ -1,8 +1,8 @@
 # Definition for singly-linked list.
-# class ListNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
 
 class Solution(object):
@@ -11,7 +11,6 @@ class Solution(object):
         :type head: ListNode
         :rtype: bool
         如果列表中不存在环，最终快指针将会最先到达尾部，此时我们可以返回 False。
-
         现在考虑一个环形链表，把慢指针和快指针想象成两个在环形赛道上跑步的运动员。
         而快的最终一定会追上慢的
         时间复杂度O(n), 空间复杂度为操作原始链表为常数级别
@@ -40,7 +39,7 @@ class SolutionF(object):
             try:
                 slow = slow.next
                 fast = fast.next.next
-            except():
+            except ():
                 return False
             if slow is fast:
                 return True

@@ -1,5 +1,4 @@
-# Leetcode_python
-Rush using python 3
+# Leetcode_python3
 
 1. [数据结构与算法之美_RMB](https://time.geekbang.org/column/126)    
 2. [c-online-compiler](https://www.jdoodle.com/c-online-compiler)     
