@@ -11,7 +11,8 @@ class Solution:
         uniqueStart = maxLength = 0
         existCharIndexs = {}
         for index, char in enumerate(s):
-            if char in existCharIndexs and uniqueStart <= existCharIndexs[char]:
+            if char in existCharIndexs and \
+              uniqueStart <= existCharIndexs[char]:
                 # 出现重复字符时,更新其索引为下一个字符的位置
                 uniqueStart = existCharIndexs[char] + 1
             else:
