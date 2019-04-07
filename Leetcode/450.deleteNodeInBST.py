@@ -4,8 +4,8 @@ class TreeNode:
         self.val = x
         self.left = None
         self.right = None
-
- def deleteNode(self, root, key):
+class Solution:
+    def deleteNode(self, root, key):
         """
         :type root: TreeNode
         :type key: int
@@ -58,8 +58,8 @@ class TreeNode:
                 return root
             else:
                 return node.left or node.right
-class Solution:
- def deleteNodeF(self, root, key):
+
+    def deleteNodeF(self, root, key):
         """
         :type root: TreeNode
         :type key: int

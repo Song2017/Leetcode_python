@@ -7,7 +7,7 @@ class TreeNode:
 
 
 class Solution:
-    def insertIntoBST0(self, root: TreeNode, val: int) -> TreeNode:
+    def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
         if not root:
             return TreeNode(val)
         if root.val > val:
@@ -42,7 +42,7 @@ class Solution:
             new.right = root.right
             root.right = new
 
-    def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
+    def insertIntoBST1(self, root: TreeNode, val: int) -> TreeNode:
         if not root:
             return TreeNode(val)
         self.insertBST(root, val)
