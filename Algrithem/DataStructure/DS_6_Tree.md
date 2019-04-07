@@ -185,7 +185,60 @@
 	    然后再删除掉这个最小节点,因为最小节点肯定没有左子节点(如果有左子结点,那就不是最小节点了)
 2. 代码实现
 ```
-
+ def deleteNode(self, root, key):
+        """
+        :type root: TreeNode
+        :type key: int
+        :rtype: TreeNode
+        """
+                
+        parent = None
+        node = root
+        while (node and node.val != key):
+            parent = node
+            if node.val > key:
+                node = node.left
+            else:
+                node = node.right
+        # not found
+        if not node:
+            return root
+        # node does't has child
+        elif not node.left and not node.right:
+            # not root
+            if parent:
+                if parent.left == node:
+                    parent.left = None
+                else:
+                    parent.right = None
+                return root
+            # root
+            return None
+        # node  has two children
+        elif node.left and node.right:
+            pre_parent = node
+            pre = node.left
+            while pre.right:
+                pre_parent = pre
+                pre = pre.right
+            if pre_parent != node:
+                pre_parent.right = pre.left
+                node.val = pre.val
+            else:
+                node.val = pre.val
+                node.left = pre.left
+            return root           
+        
+        # node only has one child
+        else:
+            if parent:
+                if parent.left == node:
+                    parent.left = node.left or node.right
+                else:
+                    parent.right = node.left or node.right
+                return root
+            else:
+                return node.left or node.right
 ```
 ### 其他操作
 	1. 快速地查找最大节点和最小节点,前驱节点和后继节点

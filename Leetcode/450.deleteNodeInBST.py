@@ -5,57 +5,114 @@ class TreeNode:
         self.left = None
         self.right = None
 
-
-class Solution:
-    def deleteNodeBST(self, root: TreeNode, p: TreeNode, key: int):
-        if key < root.val:
-            if not root.left:
-                return root
-            self.deleteNodeBST(root.left, root, key)
-        elif key > root.val:
-            if not root.right:
-                return root
-            self.deleteNodeBST(root.right, root, key)
-        else:
-            # 找到这个节点的右子树中的最小节点，把它替换到要删除的节点上,然后再删除掉这个最小节点
-            if root.left and root.right:
-                minnodep = root
-                minnode = root.right
-                while minnode.left:
-                    minnodep = minnode
-                    minnode = minnode.left
-                root.val = minnode.val
-                if root.right.val == minnode.val:
-                    root.right = root.right.right
-                else:
-                    minnodep.left = None
+ def deleteNode(self, root, key):
+        """
+        :type root: TreeNode
+        :type key: int
+        :rtype: TreeNode
+        """
+        parent = None
+        node = root
+        while (node and node.val != key):
+            parent = node
+            if node.val > key:
+                node = node.left
             else:
-                # 当前节点与其父节点的关系
-                if root.val > p.val:
-                    if root.right:
-                        p.right = root.right
-                    elif root.left:
-                        p.right = root.left
-                    else:
-                        p.right = None
+                node = node.right
+        # not found
+        if not node:
+            return root
+        # node does't has child
+        elif not node.left and not node.right:
+            # not root
+            if parent:
+                if parent.left == node:
+                    parent.left = None
                 else:
-                    if root.right:
-                        p.left = root.right
-                    elif root.left:
-                        p.left = root.left
-                    else:
-                        p.left = None
-
-        return root
-
-    def deleteNodeE(self, root: TreeNode, key: int) -> TreeNode:
-        if root is None:
+                    parent.right = None
+                return root
+            # root
             return None
+        # node  has two children
+        elif node.left and node.right:
+            pre_parent = node
+            pre = node.left
+            while pre.right:
+                pre_parent = pre
+                pre = pre.right
+            if pre_parent != node:
+                pre_parent.right = pre.left
+                node.val = pre.val
+            else:
+                node.val = pre.val
+                node.left = pre.left
+            return root           
+        
+        # node only has one child
+        else:
+            if parent:
+                if parent.left == node:
+                    parent.left = node.left or node.right
+                else:
+                    parent.right = node.left or node.right
+                return root
+            else:
+                return node.left or node.right
+class Solution:
+ def deleteNodeF(self, root, key):
+        """
+        :type root: TreeNode
+        :type key: int
+        :rtype: TreeNode
+        """
 
-        self.deleteNodeBST(root, root, key)
+        parent = None
+        node = root
+        while (node and node.val != key):
+            parent = node
+            if node.val > key:
+                node = node.left
+            else:
+                node = node.right
+        # not found
+        if not node:
+            return root
+        # node does't has child
+        elif not node.left and not node.right:
+            # not root
+            if parent:
+                if parent.left == node:
+                    parent.left = None
+                else:
+                    parent.right = None
+                return root
+            # root
+            return None
+        # node  has two children
+        elif node.left and node.right:
+            pre_parent = node
+            pre = node.left
+            while pre.right:
+                pre_parent = pre
+                pre = pre.right
+            if pre_parent != node:
+                pre_parent.right = pre.left
+                node.val = pre.val
+            else:
+                node.val = pre.val
+                node.left = pre.left
+            return root
 
-        return root
-
+        # node only has one child
+        else:
+            if parent:
+                if parent.left == node:
+                    parent.left = node.left or node.right
+                else:
+                    parent.right = node.left or node.right
+                return root
+            else:
+                return node.left or node.right
     def min(self, root):
         while root.left:
             root = root.left
@@ -96,7 +153,7 @@ class Solution:
             return root
         else:
             # 单子节点为空, 只需处理另一个子节点
-            if not root.right:
+            if not root.left:
                 left = root.left
                 root.left = None
                 return left
