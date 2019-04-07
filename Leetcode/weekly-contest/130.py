@@ -1,26 +1,22 @@
 class Solution:
     def prefixesDivBy5(self, A):
-        rtn = []
-        flag = True
-        for k in range(len(A)):
-            if A[k] == 1:
-                tmp = A[:k+1]
-                tmp.reverse()
-                s = 0
-                for i, v in enumerate(tmp):
-                    if v == 1:
-                        s += 2**i
-                if s % 5 == 0:
-                    flag = True
-                else:
-                    flag = False
-            rtn.append(flag)
-            #print(tmp, s, rtn)
+        '''
+        输入：[0,1,1]
+        输出：[true,false,false]
+        解释：
+        输入数字为 0, 01, 011；也就是十进制中的 0, 1, 3 。只有第一个数可以被 5 整除，因此 answer[0] 为真
+        '''
+        rtn, s = [False] * len(A), 0
+        for i, v in enumerate(A):
+            # 二进制求和
+            s = (s * 2 + v) % 5
+            if s % 5 == 0:
+                rtn[i] = True
         return rtn
 
     def baseNeg2(self, N):
         if N is None or N == 0:
-            return 0
+            return "0"
         rtn = []
         vr = 0
         while N != 0 and N != 1:
@@ -40,10 +36,5 @@ class Solution:
             rtn = rtn[1:]
         s = ''
         for v in rtn:
-            s+=str(v)
+            s += str(v)
         return s
-
-
-s = Solution()
-print(s.prefixesDivBy5([1, 1, 0, 0, 0, 1, 0, 0, 1]))
-print(s.baseNeg2(4))
