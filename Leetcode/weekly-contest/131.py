@@ -24,12 +24,12 @@ class Solution:
         return r2
 
     def sumRootToLeaf(self, root: TreeNode) -> int:
-        if None == root:
+        if root is None:
             return 0
         return self.sumRTL(root, 0) % 1000000007
 
     def sumRTL(self, root, s):
-        if None == root:
+        if root is None:
             return 0
         else:
             s = (s * 2 + root.val)
@@ -37,16 +37,17 @@ class Solution:
                 return s
             else:
                 return self.sumRTL(root.left, s) + self.sumRTL(root.right, s)
+
     def camelMatch(self, queries: List[str], pattern: str) -> List[bool]:
         nums = len(pattern)
-        rtn = [True]*len(queries)
+        rtn = [True] * len(queries)
         for i, q in enumerate(queries):
             pos = 0
             for c in q:
                 if pos < nums and c == pattern[pos]:
                     pos += 1
                 else:
-                    if  'A'<= c and c <= 'Z':
+                    if 'A' <= c and c <= 'Z':
                         rtn[i] = False
                         break
             if pos < nums:

@@ -4,6 +4,8 @@ class TreeNode:
         self.val = x
         self.left = None
         self.right = None
+
+
 class Solution:
     def deleteNode(self, root, key):
         """
@@ -46,8 +48,8 @@ class Solution:
             else:
                 node.val = pre.val
                 node.left = pre.left
-            return root           
-        
+            return root
+
         # node only has one child
         else:
             if parent:
@@ -113,6 +115,7 @@ class Solution:
                 return root
             else:
                 return node.left or node.right
+
     def min(self, root):
         while root.left:
             root = root.left
