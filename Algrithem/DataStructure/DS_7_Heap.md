@@ -36,15 +36,27 @@
             分类, 从下向上, 从上向下
         2. 插入元素不会出现破坏完全二叉树要求的情况, 一般采用从下向上堆化
             堆限制了父子节点之间的关系, 堆化过程中只要按层比对就可以了
-        Code
+        Code 详见Note 3
         ```
+        def heappush(self, nums, item):
+            nums.append(item)
+            self._siftdown(nums, 0, len(nums) - 1)
+
         ```
     2. 删除堆顶元素
         1. 根据第二条概念可以知道堆顶元素存储的就是堆中数据的最大值或者最小值
         2. 删除堆顶元素后, 需要子节点进行补足, 迭代到子节点后, 容易出现空洞, 即不满足完全二叉树的情况:
             解决, 直接取最后的叶节点替换到堆顶, 然后从上向下堆化
-        3. Code
+        3. Code: 详见Note 3
         ```
+        def heappop(self, nums):
+            tail = nums.pop()
+            if nums:
+                peak = nums[0]
+                nums[0] = tail
+                self._siftup(nums, 0)
+                return peak
+            return tail
         ```
 ## 实现堆排序
 1. 建堆
@@ -63,15 +75,23 @@
             B - A = S = -h + 2^1 + 2^2 + ... 2^(h-1) + 2^(h) = -h + (2^h -2) + 2^h = 2^(h+1) - h - 2
            将h=log2n, 代入S, 得到 S = 2*n - log2n -2
            也就是S: O(n)
+    4. Code 详见Note 3
+        ```
+        def heapify(nums):
+            '''
+            小顶堆堆化, 索引从0开始, 从后向前的方式堆化
+            '''
+            n = len(nums)
+            # 根据完全二叉树的特性, 只需要排序前1/2数组
+            for i in reversed(range(n // 2)):
+                self._siftup(nums, i)
+        ```           
 2. 排序
     以大顶堆为例, 堆化完成后第一个元素就是最大的值, 第一个元素已经完成了排序. O(n)
     将最后一个元素与第一个元素互换位置, 再进行1到第n-1个元素范围的排序, 
         因为其他元素都是有序的, 只需要对现在的第一个元素进行排序
         根据堆的定义, 最多需要进行 (堆的高度-1次) 比较, 交换排序范围内的首元素与最后一个元素. O(logn)
-    迭代交换排序范围内首元素与最后的元素, 当只剩一个元素时, 就完成了堆的排序. O(n * logn)
-    Code
-    ```
-    ```
+    迭代交换排序范围内首元素与最后的元素, 当只剩一个元素时, 就完成了堆的排序. O(nlogn)
 3. 时间复杂度
     根据堆排序的过程, 首次全部元素的堆化需要O(n), 剩余元素的排序过程需要O(nlogn).
     二者是串联的关系, 取高的时间复杂度, 也就是O(nlogn)
@@ -93,3 +113,71 @@
 2. CPU的缓存机制
     1. CPU每次从内存读取数据并不是只读取那个特定要访问的地址，而是读取一个数据并保存到CPU缓存中，然后下次访问内存数据的时候就会先从CPU缓存开始查找，如果找到就不需要再从内存中取。
     这样就实现了比内存访问速度更快的机制，也就是CPU缓存的意义:为了弥补内存访问速度过慢与CPU执行速度快之间的差异而引入
+3. 最小堆堆化, 插入, 删除
+    ```
+    def heapify(nums):
+        '''
+        小顶堆堆化, 索引从0开始, 从后向前的方式堆化
+        '''
+        n = len(nums)
+        # 根据完全二叉树的特性, 只需要排序前1/2数组
+        for i in reversed(range(n // 2)):
+            self._siftup(nums, i)
+
+
+    def heappush(nums, item):
+        nums.append(item)
+        self._siftdown(nums, 0, len(nums) - 1)
+
+
+    def heappop(nums):
+        tail = nums.pop()
+        if nums:
+            peak = nums[0]
+            nums[0] = tail
+            self._siftup(nums, 0)
+            return peak
+        return tail
+
+
+    def _siftup(nums, pos):
+        '''
+        将pos节点的子节点中的最小值提升到pos位置
+        '''
+        endpos, startpos, startval, smallpos = \
+        len(nums), pos, nums[pos], 2 * pos + 1
+        while smallpos < endpos:
+            # smallpos: 子节点中数值小的节点索引
+            rightpos = smallpos + 1
+            if rightpos < endpos and not nums[smallpos] < nums[rightpos]:
+                smallpos = rightpos
+            # 将子节点中小的值提升到父节点
+            nums[pos] = nums[smallpos]
+            pos = smallpos
+            smallpos = 2 * pos + 1
+        # 此时pos位置的节点的值已经替换到startpos
+        # 互换起始排序节点及其最小子节点的值
+        nums[pos] = startval
+        # pos: 最小子节点的索引
+        self._siftdown(nums, startpos, pos)
+
+
+    def _siftdown(nums, startpos, pos):
+        '''
+        以pos为叶子节点, start为根节点之间的元素进行排序. 将pos叶子节点交换到正确的排序位置
+        操作: 父节点的值大于子节点时, 父节点的值降低到子节点
+        '''
+        startval = nums[pos]
+        while pos > startpos:
+            parentpos = (pos - 1) >> 1
+            parentval = nums[parentpos]
+            # 父节点的值大于子节点时, 父节点的值降低到子节点
+            # 排序索引上升为父节点
+            if parentval > startval:
+                nums[pos] = parentval
+                pos = parentpos
+                continue
+            break
+        # pos: 值大于子节点值中的最深父节点索引
+        nums[pos] = startval
+    ```
