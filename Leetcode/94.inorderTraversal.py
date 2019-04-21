@@ -7,6 +7,9 @@ class TreeNode:
 
 
 class Solution:
+    '''
+    给定一个二叉树，返回它的中序 遍历
+    '''
     def recurseInOrder(self, root, inlist):
         if root.left:
             self.recurseInOrder(root.left, inlist)

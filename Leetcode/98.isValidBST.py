@@ -17,4 +17,25 @@ class Solution:
 
         中序遍历为严格升序
         '''
-       return False
+        if root is None:
+            return False
+        if root.right is None and root.left is None:
+            return True
+        inOrder, stack = [], []
+
+        while stack or root:
+            if root:
+                stack.append(root)
+                root = root.left
+            else:
+                root = stack.pop()
+                inOrder.append(root.val)
+                root = root.right
+
+        for i, v in enumerate(inOrder):
+            if i == 0:
+                continue
+            if v < inOrder[i-1]:
+                return False
+
+        return True
