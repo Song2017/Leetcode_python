@@ -8,6 +8,7 @@ class Trie:
     '''
     构建26叉树
     '''
+
     def __init__(self):
         """
         Initialize your data structure here.
@@ -38,7 +39,8 @@ class Trie:
 
     def startsWith(self, prefix: str) -> bool:
         """
-        Returns if there is any word in the trie that starts with the given prefix.
+        Returns if there is any word in the trie that starts with the given 
+            prefix.
         """
         node = self._root
         for i in map(lambda x: ord(x) - ord('a'), prefix):
@@ -52,6 +54,7 @@ class TrieFast:
     '''
     字典结构缓存字符串的纵向字符列
     '''
+
     def __init__(self):
         """
         Initialize your data structure here.
@@ -87,7 +90,8 @@ class TrieFast:
 
     def startsWith(self, prefix):
         """
-        Returns if there is any word in the trie that starts with the given prefix.
+        Returns if there is any word in the trie that starts with the given 
+            prefix.
         :type prefix: str
         :rtype: bool
         """

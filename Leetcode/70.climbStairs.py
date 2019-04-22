@@ -9,7 +9,7 @@ class Solution:
             self.cache[2] = 2
         elif n not in self.cache.keys():
             # 若已被缓存,则返回缓存值; 若无, 则获取前两次的递归值
-            # 因为进行了缓存, 前两次的递归值不需要再递归获取            
+            # 因为进行了缓存, 前两次的递归值不需要再递归获取
             self.cache[n] = self.climbStairs(n - 1) + self.climbStairs(n - 2)
         return self.cache[n]
 

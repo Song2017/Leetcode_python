@@ -12,18 +12,19 @@ class Solution:
     从根节点到最近叶子节点的最短路径上的节点数量。
     说明: 叶子节点是指没有子节点的节点。
     '''
- 
+
     def minDepth(self, root: TreeNode) -> int:
         if root is None:
             return 0
         if root.left and root.right:
-            return 1 + min(self.minDepth(root.left),self.minDepth(root.right))
+            return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
         elif root.left is not None:
-            return  1 + self.minDepth(root.left)
+            return 1 + self.minDepth(root.left)
         elif root.right is not None:
-            return  1 + self.minDepth(root.right)
+            return 1 + self.minDepth(root.right)
         else:
             return 1
+
     def minDepthFast(self, root):
         """
         :type root: TreeNode
