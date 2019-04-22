@@ -8,19 +8,19 @@ class Solution:
         sc, si, mx, id = '#', '#', 0, 0
         for c in s:
             si = si + c + sc
-        p = [0]*len(si)
+        p = [0] * len(si)
 
         for i, c in enumerate(si):
             if i == 0:
                 continue
-            p[i] = min(p[id*2-i], mx-i) if mx > i else 1
-            while i+p[i] < len(si) and si[i-p[i]] == si[i+p[i]]:
+            p[i] = min(p[id * 2 - i], mx - i) if mx > i else 1
+            while i + p[i] < len(si) and si[i - p[i]] == si[i + p[i]]:
                 p[i] += 1
-            if i+p[i] > mx:
-                id, mx = i, i+p[i]
+            if i + p[i] > mx:
+                id, mx = i, i + p[i]
         mxp = max(p)
         cindex = [i for i, v in enumerate(p) if v == mxp][-1]
-        return si[cindex-mxp+1:cindex+mxp].replace(sc, '')
+        return si[cindex - mxp + 1:cindex + mxp].replace(sc, '')
 
 
 Solution1 = Solution()
