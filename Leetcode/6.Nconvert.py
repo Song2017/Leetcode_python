@@ -35,6 +35,24 @@ class Solution:
 
         return ''.join(ans)
 
+    def convertF(self, s: str, numRows: int) -> str:
+        '''
+        按行数分组, 迭代原字符串, 分别追加到新的字符串数组中
+        '''
+        if numRows == 1:
+            return s
+        res = [''] * numRows
+        i = 0
+        for c in s:
+            res[i] += c
+            if i == 0:
+                flag = 1
+            if i == numRows - 1:
+                flag = -1
+            i += flag
+
+        return ''.join(res)
+
 
 s = Solution()
 print(s.convert("PAYPALISHIRING", 3))
