@@ -50,5 +50,4 @@ class Solution:
             if root.val > L:
                 root = root.left
 
-
         return root
