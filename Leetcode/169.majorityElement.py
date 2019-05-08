@@ -12,11 +12,12 @@ class Solution:
             if i not in dic:
                 dic[i] = 1
             else:
-                dic[i] +=1
-        
+                dic[i] += 1
+
         #根据列表获取值最大的索引
         vs = list(dic.values())
         return list(dic.keys())[vs.index(max(vs))]
+
     def majorityElementFast(self, nums):
         """
         :type nums: List[int]
@@ -27,9 +28,11 @@ class Solution:
             if i not in dict1:
                 dict1[i] = 1
             else:
-                dict1[i] +=1
-                
-        return max(dict1,key=dict1.get)
+                dict1[i] += 1
+
+        return max(dict1, key=dict1.get)
+
+
 so = Solution()
-print(so.majorityElement([1,23,5,6,77,1]))        
-print(so.majorityElementFast([1,23,1,5,6,77,1])) 
+print(so.majorityElement([1, 23, 5, 6, 77, 1]))
+print(so.majorityElementFast([1, 23, 1, 5, 6, 77, 1]))
