@@ -1,34 +1,36 @@
-class Solution(object):
+class Solution:
     def solveNQueens(self, n):
-        board, ret = [['.'] * n for _ in range(n)], []
-        self.dfs(board, n, 0, ret)
-        return ret
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """
 
-    def dfs(self, board, n, row, ret):
-        print(ret)
-        if row == n:
-            ret.append(["".join(i) for i in board])
-            return
-        for i in range(n):
-            if not self.canPlace(row, i, n, board):
-                continue
-            board[row][i] = 'Q'
-            self.dfs(board, n, row + 1, ret)
-            board[row][i] = '.'
+        def NQueens(n, index, row):
+            if n == index:
+                res.append(generateBoard(list(row)))
+                return
+            for i in range(n):
+                if not col[i] and not diag1[index + i] and not diag2[index - i
+                                                                     + n - 1]:
+                    row.append(i)
+                    col[i] = 1
+                    diag1[index + i] = 1
+                    diag2[index - i + n - 1] = 1
+                    NQueens(n, index + 1, row)
+                    col[i] = 0
+                    diag1[index + i] = 0
+                    diag2[index - i + n - 1] = 0
+                    row.pop()
 
-    def canPlace(self, row, col, n, board):
-        for i in range(1, row + 1):
-            # 判断同一列上是否有Q
-            if board[row - i][col] == 'Q':
-                return False
-            # 判断上半逆对角线是否有Q
-            if col - i >= 0 and board[row - i][col - i] == 'Q':
-                return False
-            # 判断上半对角线是否有Q
-            if col + i < n and board[row - i][col + i] == 'Q':
-                return False
-        return True
+        def generateBoard(row):
+            board = ['.' * n] * n
+            for i in range(n):
+                board[i] = board[i][:row[i]] + 'Q' + board[i][row[i] + 1:]
+            return board
 
-
-s = Solution()
-print(s.solveNQueens(4))
+        col = [0 for i in range(n)]
+        diag1 = [0 for i in range(2 * n - 1)]
+        diag2 = [0 for i in range(2 * n - 1)]
+        res = []
+        NQueens(n, 0, [])
+        return res
