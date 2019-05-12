@@ -107,4 +107,4 @@ class Solution:
 
 
 s = Solution()
-print(s.solveNQueensOneDim(4))
+print(s.solveNQueensRe(11))
