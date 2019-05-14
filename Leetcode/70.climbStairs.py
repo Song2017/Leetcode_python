@@ -16,6 +16,7 @@ class Solution:
     def climbStairsFast(self, n):
         """
         :type n: int
+        :type n: int
         :rtype: int
         """
 

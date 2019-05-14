@@ -24,3 +24,4 @@ class Solution:
             ans.append(level)
         ans.reverse()
         return ans
+    

@@ -57,7 +57,7 @@ class Solution:
         :type root: TreeNode
         :rtype: List[List[int]]
 
-        用栈暂存下一层的节点
+        用数组暂存下一层的节点
         """
         if not root:
             return []
