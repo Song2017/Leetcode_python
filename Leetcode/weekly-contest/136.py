@@ -60,6 +60,10 @@ class Solution:
         :type A: List[int]
         :type K: int
         :rtype: int
+        给出整数数组 A，将该数组分隔为长度最多为 K 的几个（连续）子数组。
+        分隔完成后，每个子数组的中的值都会变为该子数组中的最大值。
+        返回给定数组完成分隔后的最大和。
+        t: 数组对应元素索引下最大的和
         """
         length = len(A)
         if length <= K:
@@ -77,9 +81,9 @@ class Solution:
         for i in range(K, length):
             a = 0
             for j in range(K):
-                # if j > i: # for i in range(length):
-                #     continue
+                # 只要判断截止到当前元素的最大和,
                 a = max(a, A[i - j])
+                print(i, j, a, t)
                 t[i] = max(t[i], a * (j + 1) + t[i - j - 1])
         return t[-1]
 
@@ -88,4 +92,4 @@ s = Solution()
 # s.twoCitySchedCost([[10, 20], [30, 200], [400, 50], [30, 20]])
 # print(s.isRobotBounded("GL"))
 # print(s.gardenNoAdj(4, [[1, 2], [3, 4]]))
-print(s.maxSumAfterPartitioning2([1, 15, 7, 9, 2, 5, 10], 3))
+print(s.maxSumAfterPartitioning2([1, 17, 7, 9, 2, 5, 10], 3))

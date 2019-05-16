@@ -4,6 +4,7 @@ class ListNode:
         self.val = x
         self.next = None
 
+
 class Solution:
     def addTwoNumbers(self, l1, l2):
         """
@@ -18,17 +19,18 @@ class Solution:
         while l1 or l2:
             x = l1.val if l1 else 0
             y = l2.val if l2 else 0
-            r.next = ListNode((x+y + carry) % 10)
+            r.next = ListNode((x + y + carry) % 10)
             carry = 1 if (x + y + carry) > 9 else 0
             r = r.next
-            if l1 != None:
+            if l1 is not None:
                 l1 = l1.next
-            if l2 != None:
+            if l2 is not None:
                 l2 = l2.next
         if carry > 0:
             r.next = ListNode(1)
         #rtn.next.val: 7
         return rtn.next
+
     def addTwoNumbersGreat(self, l1, l2):
         """
         :type l1: ListNode
@@ -39,7 +41,7 @@ class Solution:
         before = head = l3
         while l1 and l2:
             s = l1.val + l2.val + l3.val
-            if s>=10:
+            if s >= 10:
                 l3.val = s - 10
                 l3.next = ListNode(1)
                 before = l3
@@ -65,10 +67,9 @@ class Solution:
                 before = l3
                 l3 = l3.next
                 con = con.next
-        
-        if l3.val == 0:before.next = None
+
+        if l3.val == 0: before.next = None
         return head
-                
 
 
 # 输入：(2 -> 4 -> 3) + (5 -> 6 -> 6 -> 9 -> 9)

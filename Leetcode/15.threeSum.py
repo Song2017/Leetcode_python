@@ -31,7 +31,7 @@ class Solution(object):
         将值按正负区分, 将正负列表中的数字求和, 判断和的相反数是否仍存在于字典中
 
         """
-        #将输入列表的值作为索引, 对应出现的次数作为新的字典结构的值
+        # 将输入列表的值作为索引, 对应出现的次数作为新的字典结构的值
         dic = {}
         for ele in nums:
             if ele not in dic:
@@ -62,5 +62,5 @@ class Solution(object):
 
 
 so = Solution()
-#print(so.threeSum([-1, 23, -5, 6, 77, 1, 0]))
-print(so.threeSum2([-13, -1, 0, 1, 2, 3, -1, -4, 14]))
+# print(so.threeSum([-1, 23, -5, 6, 77, 1, 0]))
+print(so.threeSum([-13, -1, 0, 1, 2, 3, -1, -4, 14]))
