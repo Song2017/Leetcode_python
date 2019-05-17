@@ -1,7 +1,7 @@
 class Solution:
-'''
-解决思路, 构建可以从栈中弹出的括号字符的**索引的辅助列表**
-'''
+    '''
+    解决思路, 构建可以从栈中弹出的括号字符的**索引的辅助列表**
+    '''
     def longestValidParenthes(self, s: 'str') -> 'int':
         '''
         给定一个只包含 '(' 和 ')' 的字符串，找出'()'的最大有效长度
@@ -45,7 +45,6 @@ class Solution:
         """
         :type s: str
         :rtype: int
-        
         辅助列表中存的是字符的索引
         """
         cl = maxlen = 0
