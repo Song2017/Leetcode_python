@@ -36,7 +36,6 @@ class Solution:
                 ans = max(ans, f[w])
         # print(f)
         return ans
- 
 
 
 s = Solution()
