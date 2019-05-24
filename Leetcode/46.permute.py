@@ -1,4 +1,7 @@
 class Solution:
+    '''
+    给定一个没有重复数字的序列，返回其所有可能的全排列
+    '''
     def permute(self, nums):
         def dfs(first=0):
             if first == n:
