@@ -30,12 +30,9 @@ class Solution:
         slow.next = None
         lf = self.sortList(head)
         lr = self.sortList(rhead)
-
-        # 子链表有一条不存在则返回另外一条
-        if not lf or not lr:
-            return lf or lr
         # 合并lf, lr, 此时二者均为有序的
         head = cur = ListNode(-1)
+        # 子链表有一条不存在则返回另外一条
         while lf and lr:
             if lf.val < lr.val:
                 cur.next = lf
@@ -46,4 +43,29 @@ class Solution:
             # 结果链表进行到一个节点
             cur = cur.next
         cur.next = lf or lr
+        return head.next
+
+    def sortListArray(self, head: ListNode) -> ListNode:
+        nums, cur = [], head
+        while cur:
+            nums.append(cur.val)
+            cur = cur.next
+        nums.sort()
+        cur = head
+        for i in nums:
+            cur.val = i
+            cur = cur.next
+        return head
+
+    def sortListArray2(self, head: ListNode) -> ListNode:
+        nums, cur = [], head
+        while cur:
+            nums.append(cur)
+            cur = cur.next
+        nums.sort(key=lambda x: x.val)
+        head = cur = ListNode(-1)
+        for i in nums:
+            cur.next = i
+            cur = cur.next
+        cur.next = None
         return head.next

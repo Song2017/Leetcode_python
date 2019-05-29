@@ -3,7 +3,7 @@
 :type head: ListNode
 :rtype: bool
 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
-为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 
+为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置(索引从 0 开始)
 如果 pos 是 -1，则在该链表中没有环。
 说明：不允许修改给定的链表
 证明: 存在环
@@ -11,8 +11,8 @@
     !!! 因为fast先进入环，在slow进入之后，如果把slow看作在前面，fast在后面每次循环都向slow靠近1，
         所以一定会相遇，而不会出现fast直接跳过slow的情况
     如果fast遇到null，则说明没有环，返回false；
-    如果slow==fast，说明有环，并且此时fast超了slow一圈环的长度(b+c) 
-    
+    如果slow==fast，说明有环，并且此时fast超了slow一圈环的长度(b+c)
+
 设: 1. 从头节点到入环节点长度为a
     2. 从入环的节点到相遇节点长度为b
     3. 从相遇的节点再到达入环节点的长度为c
@@ -40,6 +40,8 @@ class Solution(object):
             slow, fast = slow.next, fast.next.next
             if slow == fast:
                 start = head
+                # 头节点到入环节点长度 = 相遇的节点再到达入环节点的长度
+                # 所以从头节点和相遇节点同时出发, 二者再相遇时就是相遇的入环的节点
                 while start != slow:
                     start, slow = start.next, slow.next
                 return start

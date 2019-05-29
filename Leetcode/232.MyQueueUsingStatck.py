@@ -19,6 +19,7 @@ class MyQueue(object):
         """
         Push element x to the back of queue.
         :type x: int
+        :type x: int
         :rtype: None
         """
         self.stack.append(x)
