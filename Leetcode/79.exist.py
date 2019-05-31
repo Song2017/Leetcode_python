@@ -19,7 +19,7 @@ class Solution:
 
         r, c = len(board), len(board[0])
         states = [[0] * c for _ in range(r)]
-        
+
         def dfs(word, states, x, y):
             print(word, x, y)
             if len(word) == 0:

@@ -4,39 +4,40 @@ class Solution:
         n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
         二维矩阵存储棋盘状态, 采用递归解法
         '''
+
+        def dfs(row, board, ret, size):
+            # print(board, size, row)
+            if row == size:
+                ret.append(["".join(i) for i in board])
+                return
+            # 对每一列进行尝试
+            for i in range(size):
+                if not canPlace(row, i, board, size):
+                    continue
+                board[row][i] = 'Q'
+                # 对每一行进行尝试, 同时也是回溯点
+                dfs(row + 1, board, ret, size)
+                # !! 将棋盘恢复为未摆放的状态
+                board[row][i] = '.'
+
+        def canPlace(row, col, board, size):
+            # 只要对判断行之上的行进行判断, 当前判断行将要放置, 也不需要判断
+            for i in range(1, row + 1):
+                # 同一列
+                if board[row - i][col] == 'Q':
+                    return False
+                # 上半对角线
+                if col - i >= 0 and board[row - i][col - i] == 'Q':
+                    return False
+                # 上半逆对角线
+                if col + i < size and board[row - i][col + i] == 'Q':
+                    return False
+
+            return True
+
         board, ret = [['.'] * n for _ in range(n)], []
-        self.dfs(0, board, ret, n)
+        dfs(0, board, ret, n)
         return ret
-
-    def dfs(self, row, board, ret, size):
-        # print(board, size, row)
-        if row == size:
-            ret.append(["".join(i) for i in board])
-            return
-        # 对每一列进行尝试
-        for i in range(size):
-            if not self.canPlace(row, i, board, size):
-                continue
-            board[row][i] = 'Q'
-            # 对每一行进行尝试, 同时也是回溯点
-            self.dfs(row + 1, board, ret, size)
-            # !! 将棋盘恢复为未摆放的状态
-            board[row][i] = '.'
-
-    def canPlace(self, row, col, board, size):
-        # 只要对判断行之上的行进行判断, 当前判断行将要放置, 也不需要判断
-        for i in range(1, row + 1):
-            # 同一列
-            if board[row - i][col] == 'Q':
-                return False
-            # 上半对角线
-            if col - i >= 0 and board[row - i][col - i] == 'Q':
-                return False
-            # 上半逆对角线
-            if col + i < size and board[row - i][col + i] == 'Q':
-                return False
-
-        return True
 
     def solveNQueensOneDim(self, n: int):
         '''
