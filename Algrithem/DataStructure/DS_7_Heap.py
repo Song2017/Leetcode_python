@@ -3,10 +3,11 @@ class Heap(object):
     索引从0开始的小顶堆
     参考: https://github.com/python/cpython/blob/master/Lib/heapq.py
 
+    author: Ben
     '''
 
     def __init__(self, nums):
-        self.heap = nums
+        self._heap = nums
 
     def _siftup(self, pos):
         '''
@@ -14,20 +15,20 @@ class Heap(object):
         将pos节点的子节点中的最值提升到pos位置
         '''
         start = pos
-        startval = self.heap[pos]
-        n = len(self.heap)
+        startval = self._heap[pos]
+        n = len(self._heap)
         # 完全二叉树特性
         child = pos * 2 + 1
         # 比较叶子节点
         while child < n:
             right = child + 1
             # 平衡二叉树的特性, 大的都在右边
-            if right < n and not self.heap[right] > self.heap[child]:
+            if right < n and not self._heap[right] > self._heap[child]:
                 child = right
-            self.heap[pos] = self.heap[child]
+            self._heap[pos] = self._heap[child]
             pos = child
             child = pos * 2 + 1
-        self.heap[pos] = startval
+        self._heap[pos] = startval
 
         # 此时只有pos是不确定的
         self._siftdown(start, pos)
@@ -38,16 +39,16 @@ class Heap(object):
         以pos为叶子节点, start为根节点之间的元素进行排序. 将pos叶子节点交换到正确的排序位置
         操作: 从叶子节点开始, 当父节点的值大于子节点时, 父节点的值降低到子节点
         '''
-        startval = self.heap[pos]
+        startval = self._heap[pos]
         while pos > start:
             parent = (pos - 1) >> 1
-            parentval = self.heap[parent]
+            parentval = self._heap[parent]
             if parentval > startval:
-                self.heap[pos] = parentval
+                self._heap[pos] = parentval
                 pos = parent
                 continue
             break
-        self.heap[pos] = startval
+        self._heap[pos] = startval
 
     def heapify(self):
         '''
@@ -59,7 +60,7 @@ class Heap(object):
         2. 因为开始时待排序树的根节点还没有排序, 为了保证根节点的有序,
         需要将子树中根节点交换到正确顺序
         '''
-        n = len(self.heap)
+        n = len(self._heap)
         for i in reversed(range(n // 2)):
             self._siftup(i)
 
@@ -67,12 +68,12 @@ class Heap(object):
         '''
         弹出堆首的最值 O(logn)
         '''
-        tail = self.heap.pop()
+        tail = self._heap.pop()
         # 为避免破环完全二叉树特性, 将堆尾元素填充到堆首
         # 此时, 只有堆首是未排序的, 只需要一次从上向下的堆化
-        if self.heap:
-            peak = self.heap[0]
-            self.heap[0] = tail
+        if self._heap:
+            peak = self._heap[0]
+            self._heap[0] = tail
             self._siftup(0)
             return peak
         return tail
@@ -81,13 +82,13 @@ class Heap(object):
         '''
         添加元素到堆尾 O(logn)
         '''
-        n = len(self.heap)
-        self.heap.append(val)
+        n = len(self._heap)
+        self._heap.append(val)
         # 此时只有堆尾的节点是未排序的, 将添加的节点迭代到正确的位置
         self._siftdown(0, n)
 
     def __repr__(self):
-        vals = [str(i) for i in self.heap]
+        vals = [str(i) for i in self._heap]
         return '>'.join(vals)
 
 

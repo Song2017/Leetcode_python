@@ -12,6 +12,7 @@
     不需要额外的空间,在待排序数组本身内部进行排序
     基准值通过random随机选取
 '''
+import random
 
 
 # 快速排序
@@ -31,17 +32,18 @@ def QuickSortNotRepeate(arr):
     less = [i for i in arr[:] if i <= pivot]
     # 推导式简单实现(pivot, len(arr)]
     greater = [i for i in arr[:] if i > pivot]
-    return QuickSort(less) + QuickSort(greater)
+    return QuickSortNotRepeate(less) + QuickSortNotRepeate(greater)
 
 
-print('QuickSort([90,0,-1,22,3])', QuickSort([0, 1, 2, 3]))
+# print('QuickSort([90,0,-1,22,3])', QuickSortNotRepeate([0, 1, 2, 3]))
 
 
 # 用快速排序查找第K大元素(非索引值) 1=<K<=len(arr)
 def QuickSortPosK(arr, K):
-    # 基准值为数组首位,末位,中间位数字的平均值
-    if len(arr) == 1: return arr[0]
-    pivot = arr[-1]
+    # 基准值为数组首位,末位数字的平均值
+    if len(arr) == 1:
+        return arr[0]
+    pivot = (arr[0] + arr[-1]) / 2
     # 推导式简单实现[i, pivot]
     less = [i for i in arr[:] if i <= pivot]
     greater = [i for i in arr[:] if i > pivot]
@@ -54,53 +56,68 @@ def QuickSortPosK(arr, K):
         return QuickSortPosK(greater, K - lenLess)
 
 
-print('QuickSortPosK', QuickSortPosK([90, 0, -1, 22, 3, 3, 3], 4))
-
-# 编程珠玑实现
-# 双向排序: 提高非随机输入的性能
-# 不需要额外的空间,在待排序数组本身内部进行排序
-# 基准值通过random随机选取
-# 入参: 待排序数组, 数组开始索引 0, 数组结束索引 len(array)-1
-import random
+# print('QuickSortPosK', QuickSortPosK([90, 0, -1, 22, 3, 3, 3], 4))
 
 
-def swap(arr, l, u):
-    arr[l], arr[u] = arr[u], arr[l]
-    return arr
-
-
-def QuickSort_Perl(arr, l, u):
-    # 小数组排序i可以用插入或选择排序
-    # if u-l < 50 : return arr
-    # 基线条件: low index = upper index; 也就是只有一个值的区间
-    if l >= u:
+def QuickSort(arr):
+    # 双向排序: 提高非随机输入的性能
+    # 不需要额外的空间,在待排序数组本身内部进行排序
+    # 基准值通过random随机选取
+    # 入参: 待排序数组, 数组开始索引 0, 数组结束索引 len(array)-1
+    if arr is None or len(arr) < 1:
         return arr
-    # 随机选取基准值, 并将基准值替换到数组第一个元素
-    swap(arr, l, int(random.uniform(l, u)))
-    temp = arr[l]
-    # 缓存边界值, 从上下边界同时排序
-    i, j = l, u
-    while True:
-        # 第一个元素是基准值,所以要跳过
-        i += 1
-        # 在小区间中, 进行排序
-        # 从下边界开始寻找大于基准值的索引
-        while i <= u and arr[i] <= temp:
+
+    def swap(arr, low, upper):
+        tmp = arr[low]
+        arr[low] = arr[upper]
+        arr[upper] = tmp
+        return arr
+
+    def QuickSort_TwoWay(arr, low, upper):
+        # 小数组排序i可以用插入或选择排序
+        # if upper-low < 50 : return arr
+        # 基线条件: low index = upper index; 也就是只有一个值的区间
+        if low >= upper:
+            return arr
+        # 随机选取基准值, 并将基准值替换到数组第一个元素
+        swap(arr, low, int(random.uniform(low, upper)))
+        temp = arr[low]
+        # 缓存边界值, 从上下边界同时排序
+        i, j = low, upper
+        while True:
+            # 第一个元素是基准值,所以要跳过
             i += 1
-        # 从上边界开始寻找小于基准值的索引
-        # 因为j肯定大于i, 所以索引值肯定在小区间中
-        while arr[j] > temp:
-            j -= 1
-        # 如果小索引大于等于大索引, 说明排序完成, 退出排序
-        if i >= j:
-            break
-        arr[i], arr[j] = arr[j], arr[i]
-    # 将基准值的索引从下边界调换到索引分割点
-    swap(arr, l, j)
-    QuickSort_Perl(arr, l, j - 1)
-    QuickSort_Perl(arr, j + 1, u)
-    return arr
+            # 在小区间中, 进行排序
+            # 从下边界开始寻找大于基准值的索引
+            while i <= upper and arr[i] <= temp:
+                i += 1
+            # 从上边界开始寻找小于基准值的索引
+            # 因为j肯定大于i, 所以索引值肯定在小区间中
+            while arr[j] > temp:
+                j -= 1
+            # 如果小索引大于等于大索引, 说明排序完成, 退出排序
+            if i >= j:
+                break
+            swap(arr, i, j)
+        # 将基准值的索引从下边界调换到索引分割点
+        swap(arr, low, j)
+        QuickSort_TwoWay(arr, low, j - 1)
+        QuickSort_TwoWay(arr, j + 1, upper)
+        return arr
+
+    return QuickSort_TwoWay(arr, 0, len(arr) - 1)
 
 
-print('QuickSort_Perl([-22, -21, 0, 1, 2, 22])',
-      QuickSort_Perl([-22, -21, 0, 1, 2, 22], 0, 5))
+if __name__ == "__main__":
+    a1 = [3, 5, 6, 7, 8]
+    a2 = [2, 2, 2, 2]
+    a3 = [4, 3, 2, 1]
+    a4 = [5, -1, 9, 3, 7, 8, 3, -2, 9]
+    QuickSort(a1)
+    print(a1)
+    QuickSort(a2)
+    print(a2)
+    QuickSort(a3)
+    print(a3)
+    QuickSort(a4)
+    print(a4)
