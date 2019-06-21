@@ -10,7 +10,7 @@ class Solution(object):
         """
         :type lists: List[ListNode]
         :rtype: ListNode
-        使用分治思想, K个list的整体排序递归分解为两两List的有序
+        使用分治思想, K个list的整体排序递归分解为两两List的有序, 类似于归并排序
         """
         if len(lists) == 0:
             return None
@@ -52,10 +52,10 @@ class Solution(object):
             return lists[0]
         head = {}
         tail = {}
-        for l in lists:
+        for lst in lists:
             # 链表中还有数据元素
-            while(l):
-                v = l.val
+            while(lst):
+                v = lst.val
                 # hash表建立x轴联系, 键值是链表值去重后的结果, 存储值是链表
                 # head用来获取链表值去重后的结果
                 # tail用来关联所有的链表值, 下面是tail的数据结构
@@ -63,12 +63,12 @@ class Solution(object):
                 #     |   |
                 #     1   3
                 if v in head:
-                    tail[v].next = l
-                    tail[v] = l
+                    tail[v].next = lst
+                    tail[v] = lst
                 else:
-                    head[v] = l
-                    tail[v] = l
-                l = l.next
+                    head[v] = lst
+                    tail[v] = lst
+                lst = lst.next
         keys = list(head.keys())
         keys.sort()
         r = ListNode(0)
@@ -85,15 +85,15 @@ class Solution(object):
         获取所有值转为列表, 进行排序, 然后重新返回新的链表
         空间复杂度O(n*m)
         """
-        l = []
+        lst = []
         for nodes in lists:
             while nodes:
-                l.append(nodes.val)
+                lst.append(nodes.val)
                 nodes = nodes.next
-        l.sort()
+        lst.sort()
         head = ListNode(-1)
         temp = head
-        for i in l:
+        for i in lst:
             temp.next = ListNode(i)
             temp = temp.next
         return head.next

@@ -19,6 +19,9 @@ from datetime import datetime
         数组的随机访问特性要求内存空间连续, 1GB 大小的数据，如果希望用数组来存储，那就需要 1GB 的连续内存空间
         注意即便有 2GB 的内存空间剩余，但是如果这剩余的 2GB 内存空间都是零散的，
         没有连续的 1GB 大小的内存空间，那照样无法申请一个 1GB 大小的数组
+
+1. low <= high
+2. low或high直接取mid会出现死循环, high = mid - 1 or low = mid + 1
 '''
 
 
