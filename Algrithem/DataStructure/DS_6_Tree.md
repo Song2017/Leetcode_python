@@ -89,15 +89,16 @@
 ```
     inOrder(r) = inOrder(r->left)->print r->inOrder(r->right)
     def inorderTraversal(self, root: TreeNode):    
-    rtn, stack = [], []
-    while stack or root:
-        if root:
-            stack.append(root)
-            root = root.left
-        else:
-            root = stack.pop()
-            rtn.append(root.val)
-            root = root.right 
+        rtn, stack = [], []
+        while stack or root:
+            if root:
+                stack.append(root)
+                root = root.left
+            else:
+                root = stack.pop()
+                rtn.append(root.val)
+                root = root.right 
+        return rtn                
 ```
 3. 后序遍历
 ```

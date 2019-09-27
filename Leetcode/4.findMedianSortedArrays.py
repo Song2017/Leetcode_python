@@ -10,41 +10,41 @@ class Solution:
             此时num2的中位数小于等于合并后的中位数, 所以num2要查大的部分 n2r,
             b, n2左值 > n1右值: 类似于a.
             c, 左值 < 右值: 因为数组是有序的, 所以, 左边的个数=右边的个数, 二分点就是中位数的位置
-        3. 数组长度是偶数的, 分割点左边的值: nums1[(c1 - 1) >> 1]
-                            分割点右边的值: nums1[c1 >> 1]
+        3. 数组长度是偶数的, 分割点左边的值: nums1[(center1 - 1) >> 1]
+                            分割点右边的值: nums1[center1 >> 1]
            是奇数时, 二者是相等的
         '''
         n, m = len(nums1), len(nums2)
         # 为防止索引溢出, 将长度小的数组放到nums1
         if n > m:
-            nums1, nums2 = nums2, nums1
-            n, m = m, n
+            return self.findMedianSortedArraysB(nums2, nums1)
         # num1分割点左边的值, num1分割点右边的值, num2分割点左边的值, num2分割点右边的值
         n1left, n1right, n2left, n2right = 0, 0, 0, 0
         # high设为n * 2, 保证了第一次二分时, 从nums1的末尾开始遍历
         low, high = 0, n * 2
-
         while low <= high:
             # 待比较的num1的长度, 以此得到num1的二分点
-            c1 = low + ((high - low) >> 1)
+            center1 = low + ((high - low) >> 1)
             # 待比较的num2的长度
-            c2 = m + n - c1
+            center2 = m + n - center1
             # 6,7 & 3,4,5: nums1已经比较完, 说明都比中位数大, 中位数在nums2,
             # num1分割点左边的值是空了, 不会参与到中位数的计算中
-            n1left = -float("inf") if c1 == 0 else nums1[(c1 - 1) >> 1]
+            n1left = -float("inf") if center1 == 0 else nums1[(center1 - 1)
+                                                              >> 1]
             # 11,12 & 3,4: nums2已经比较完, 说明都比中位数小, 中位数在nums1,
             # num2分割点右边的值空了, 不会参与到中位数的计算中
-            n2right = float("inf") if c2 == 2 * m else nums2[c2 >> 1]
+            n2right = float("inf") if center2 == 2 * m else nums2[center2 >> 1]
             # num1的中位数大于等于合并后的中位数, 所以num1要查小的部分 n1l
             # 11,12 & 0,1,3:
             if n1left > n2right:
-                high = c1 - 1
+                high = center1 - 1
                 continue
 
-            n1right = float("inf") if c1 == 2 * n else nums1[c1 >> 1]
-            n2left = -float("inf") if c2 == 0 else nums2[(c2 - 1) >> 1]
+            n1right = float("inf") if center1 == 2 * n else nums1[center1 >> 1]
+            n2left = -float("inf") if center2 == 0 else nums2[(center2 - 1)
+                                                              >> 1]
             if n2left > n1right:
-                low = c1 + 1
+                low = center1 + 1
             else:
                 break
         # 处理数组长度为偶数/奇数的边界问题
@@ -103,8 +103,39 @@ class Solution:
         else:
             return (nums[int(mid)] + nums[int(mid) + 1]) / 2.0
 
+    def findMedianSortedArraysS(self, nums1, nums2):
+        m = len(nums1)
+        n = len(nums2)
+        if m > n:
+            return self.findMedianSortedArraysS(nums2, nums1)
+        shortleft, shortright, longleft, longright = 0, 0, 0, 0
+
+        low, high = 0, 2 * m
+        while low <= high:
+            scenter = low + (high - low) >> 1
+            lcenter = m + n - scenter
+            # 短左 > 长右
+            shortleft = -float('inf') if scenter == 0 else nums1[(scenter - 1)
+                                                                 >> 1]
+            longright = float('inf') if lcenter == 2 * m else nums2[lcenter
+                                                                    >> 1]
+            if shortleft > longright:
+                high = scenter - 1
+                continue
+
+            shortright = float('inf') if scenter == 2 * n else nums1[scenter
+                                                                     >> 1]
+            longleft = -float('inf') if lcenter == 0 else nums2[(lcenter - 1)
+                                                                >> 1]
+            if longleft > shortright:
+                low = scenter + 1
+            else:
+                break
+
+        return (max(shortleft, longleft) + min(shortright, longright)) / 2.0
+
 
 Solution1 = Solution()
 # print(Solution1.findMedianSortedArraysB([], [9, 11]))
 # print(Solution1.findMedianSortedArraysB([1, 2], [9, 11]))
-print(Solution1.findMedianSortedArraysB([2, 3], [1]))
+print(Solution1.findMedianSortedArraysS([2, 3], [1]))
