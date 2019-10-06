@@ -12,7 +12,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "stopOnEntry": true,
-            "pythonPath": "C:/Users/503027010/AppData/Local/Programs/Python/Python37-32/python.exe"
+            "pythonPath": "C:/Users/Songgs/AppData/Local/Programs/Python/Python37-32/python.exe"
         },
         {
             "name": "Python: Remote Attach",

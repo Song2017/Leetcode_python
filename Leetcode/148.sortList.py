@@ -6,7 +6,7 @@ class ListNode:
 
 
 class Solution:
-    def sortList(self, head: ListNode) -> ListNode:
+    def sortList0(self, head: ListNode) -> ListNode:
         # 当没有或只有一个节点时, 直接返回
         if not head or not head.next:
             return head
@@ -69,3 +69,46 @@ class Solution:
             cur = cur.next
         cur.next = None
         return head.next
+
+    def sortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        # fast = head.next: fix 2 nodes maximum recursion
+        fast, slow = head.next, head
+        # find middle
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next 
+        sec = slow.next
+        slow.next = None
+        # recursion
+        front = self.sortList(head)
+        second = self.sortList(sec)
+
+        ans = cur = ListNode(-1)
+        # merge
+        while front and second:
+            if front.val > second.val:
+                cur.next = front
+                front = front.next
+            else:
+                cur.next = second
+                second = second.next
+            cur = cur.next
+        cur = front or second
+
+        return ans.next
+
+
+l4 = ListNode(4)
+l2 = ListNode(2)
+l1 = ListNode(1)
+l3 = ListNode(3)
+l4.next = l2
+l2.next = l1
+l1.next = l3
+
+
+if __name__ == "__main__":
+    s = Solution()
+    s.sortList(l4)
