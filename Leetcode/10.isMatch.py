@@ -12,6 +12,7 @@ class Solution:
 
     def isMatch(self, s: str, p: str) -> bool:
         '''
+        dp[i][j] 表示 s 的前 i 个是否能被 p 的前 j 个匹配
         p.charAt(j) == s.charAt(i) : dp[i][j] = dp[i-1][j-1]
         If p.charAt(j) == '.' : dp[i][j] = dp[i-1][j-1];
         If p.charAt(j) == '*': here are two sub conditions:

@@ -58,7 +58,7 @@ class Solution(object):
                 v = lst.val
                 # hash表建立x轴联系, 键值是链表值去重后的结果, 存储值是链表
                 # head用来获取链表值去重后的结果
-                # tail用来关联所有的链表值, 下面是tail的数据结构
+                # tail用来关联所有的链表中重复的值, 下面是tail的数据结构
                 #     1 2 3 4 5 10
                 #     |   |
                 #     1   3
@@ -114,7 +114,6 @@ p13 = ListNode(10)
 head3.next = p13
 
 s = Solution()
-result = s.mergeKLists([head, head2, head3])
+result = s.mergeKListsFast([head, head2, head3])
 while result:
-    print(11, result.val)
     result = result.next

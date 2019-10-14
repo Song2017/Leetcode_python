@@ -20,6 +20,20 @@ class Solution:
 
         return ma
 
+    def maxAreaF(self, height) -> int:
+        ans = 0
+        left = 0
+        right = len(height) - 1
+        while left < right:
+            if height[left] > height[right]:
+                ans = max(ans, height[right] * (right - left))
+                right -= 1
+            else:
+                ans = max(ans, height[left] * (right - left))
+                left += 1
+
+        return ans
+
 
 s = Solution()
 print(s.maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]))

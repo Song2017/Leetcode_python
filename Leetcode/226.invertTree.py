@@ -7,7 +7,7 @@ class TreeNode:
 
 
 class Solution:
-    def invertTree(self, root: TreeNode) -> TreeNode:
+    def invertTree0(self, root: TreeNode) -> TreeNode:
         '''
         翻转一棵二叉树
         '''
@@ -18,4 +18,20 @@ class Solution:
         self.invertTree(root.right)
         self.invertTree(root.left)
 
+        return root
+
+    def invertTree(self, root: TreeNode) -> TreeNode:
+        # bfs
+        if not root:
+            return
+        from collections import deque
+        q = deque()
+        q.appendleft(root)
+        while q:
+            n = q.pop()
+            n.left, n.right = n.right, n.left
+            if n.left:
+                q.appendleft(n.left)
+            if n.right:
+                q.appendleft(n.right)
         return root
