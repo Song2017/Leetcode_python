@@ -68,9 +68,7 @@ def QuickSort(arr):
         return arr
 
     def swap(arr, low, upper):
-        tmp = arr[low]
-        arr[low] = arr[upper]
-        arr[upper] = tmp
+        arr[low], arr[upper] = arr[upper], arr[low]
         return arr
 
     def QuickSort_TwoWay(arr, low, upper):
@@ -80,12 +78,12 @@ def QuickSort(arr):
         if low >= upper:
             return arr
         # 随机选取基准值, 并将基准值替换到数组第一个元素
-        swap(arr, low, int(random.uniform(low, upper)))
+        # swap(arr, low, int(random.uniform(low, upper)))
         temp = arr[low]
         # 缓存边界值, 从上下边界同时排序
         i, j = low, upper
         while True:
-            # 第一个元素是基准值,所以要跳过
+            # 第一个元素是基准值, 所以要跳过
             i += 1
             # 在小区间中, 进行排序
             # 从下边界开始寻找大于基准值的索引
@@ -99,6 +97,7 @@ def QuickSort(arr):
             if i >= j:
                 break
             swap(arr, i, j)
+            
         # 将基准值的索引从下边界调换到索引分割点
         swap(arr, low, j)
         QuickSort_TwoWay(arr, low, j - 1)
@@ -113,11 +112,12 @@ if __name__ == "__main__":
     a2 = [2, 2, 2, 2]
     a3 = [4, 3, 2, 1]
     a4 = [5, -1, 9, 3, 7, 8, 3, -2, 9]
+    arr_sample = [3, 4, 2, 66, 1, 8, 9, 2, 4, 3]
     QuickSort(a1)
     print(a1)
     QuickSort(a2)
     print(a2)
-    QuickSort(a3)
-    print(a3)
+    QuickSort(arr_sample)
+    print(arr_sample)
     QuickSort(a4)
     print(a4)
